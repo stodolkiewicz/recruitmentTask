@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializer;
 import github.info.client.integration.GithubRepoDeserializer;
 import github.info.client.integration.GithubRepoService;
+import github.info.client.integration.GithubServiceGenerator;
 import github.info.client.model.GithubRepo;
 import okhttp3.OkHttpClient;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -17,15 +18,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ClientApplication {
 
 	public static void main(String[] args) {
-		OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
-		Retrofit retrofit = new Retrofit.Builder()
-				.baseUrl("https://api.github.com/")
-				.addConverterFactory(buildGsonConverter())
-				.client(httpClient.build())
-				.build();
-
-
-		GithubRepoService service = retrofit.create(GithubRepoService.class);
+		GithubRepoService service = GithubServiceGenerator.createService(GithubRepoService.class);
 		Call<GithubRepo> callSync = service.getRepoInfo("stodolkiewicz", "cryptofire");
 
 		try {
@@ -35,15 +28,5 @@ public class ClientApplication {
 		} catch (Exception ex) {
 			System.out.println("Oh no!");
 		}
-	}
-
-	private static GsonConverterFactory buildGsonConverter(){
-		GsonBuilder gsonBuilder = new GsonBuilder();
-
-		// Adding custom deserializers
-		gsonBuilder.registerTypeAdapter(GithubRepo.class, new GithubRepoDeserializer());
-		Gson myGson = gsonBuilder.create();
-
-		return GsonConverterFactory.create(myGson);
 	}
 }
