@@ -1,11 +1,11 @@
 package github.info.client.model;
 
-import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @ToString
@@ -15,6 +15,6 @@ public class GithubRepo {
     private String description;
     private String cloneUrl;
     private int stars;
-    private LocalDate createdAt;
+    private LocalDateTime createdAt;
 
 }
