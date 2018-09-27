@@ -1,5 +1,6 @@
 package github.info.client.controller;
 
+import github.info.client.exception.RepositoryNotFoundException;
 import github.info.client.integration.GithubRepoServiceCaller;
 import github.info.client.integration.GithubRepoServiceCallerImpl;
 import github.info.client.model.GithubRepo;
@@ -14,9 +15,11 @@ public class GithubRepoController {
     GithubRepoServiceCaller githubRepoServiceCaller;
 
     @GetMapping("/repos/{owner}/{repository-name}")
-    public GithubRepo getSomeString(@PathVariable String owner, @PathVariable("repository-name") String repositoryName){
+    public GithubRepo getSomeString(@PathVariable String owner, @PathVariable("repository-name") String repositoryName) throws RepositoryNotFoundException {
         GithubRepo githubRepo = githubRepoServiceCaller.getRepoBasicInfoSync(owner, repositoryName);
-
+        if(githubRepo == null){
+            throw new RepositoryNotFoundException(owner, repositoryName);
+        }
         return githubRepo;
     }
 }
