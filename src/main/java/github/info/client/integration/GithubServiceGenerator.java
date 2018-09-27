@@ -2,28 +2,29 @@ package github.info.client.integration;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import github.info.client.config.bean.GithubStartPathProperty;
 import github.info.client.model.GithubRepo;
 import okhttp3.OkHttpClient;
+import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.stereotype.Service;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 @Service
+@Configurable
 public class GithubServiceGenerator {
+    private Retrofit retrofit;
 
-    public GithubServiceGenerator() {}
-
-    private static final String BASE_URL = "https://api.github.com/";
-
-    private OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
-
-    private Retrofit.Builder builder
-            = new Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .addConverterFactory(buildGithubRepoConverter())
-            .client(httpClient.build());
-
-    private Retrofit retrofit = builder.build();
+    public GithubServiceGenerator(GithubStartPathProperty githubStartPathProperty) {
+        GithubStartPathProperty githubStartPathProperty1 = githubStartPathProperty;
+        String BASE_URL = githubStartPathProperty.getGithubStartPath();
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        Retrofit.Builder builder = new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(buildGithubRepoConverter())
+                .client(httpClient.build());
+        retrofit = builder.build();
+    }
 
     public <S> S createService(Class<S> serviceClass) {
         return retrofit.create(serviceClass);
