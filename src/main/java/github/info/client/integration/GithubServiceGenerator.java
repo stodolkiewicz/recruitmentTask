@@ -4,12 +4,11 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import github.info.client.model.GithubRepo;
 import okhttp3.OkHttpClient;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-@Component
+@Service
 public class GithubServiceGenerator {
 
     public GithubServiceGenerator() {}

@@ -2,7 +2,6 @@ package github.info.client.controller;
 
 import github.info.client.exception.RepositoryNotFoundException;
 import github.info.client.integration.GithubRepoServiceCaller;
-import github.info.client.integration.GithubRepoServiceCallerImpl;
 import github.info.client.model.GithubRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
