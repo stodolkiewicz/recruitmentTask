@@ -35,5 +35,6 @@ dependencies {
 	// https://mvnrepository.com/artifact/com.squareup.retrofit2/converter-gson
 	compile group: 'com.squareup.retrofit2', name: 'converter-gson', version: '2.4.0'
 
-
+	compile("org.springframework.boot:spring-boot-starter-web")
+	testCompile('org.springframework.boot:spring-boot-starter-test')
 }
